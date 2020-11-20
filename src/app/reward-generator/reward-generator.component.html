@@ -1,0 +1,50 @@
+<div class="reward-generator" *ngIf="isLoading">
+  <div class="reward-generator--preview row">
+    loading...
+  </div>
+</div>
+
+<div class="reward-generator" *ngIf="!isLoading">
+  <div class="reward-generator__preview row" *ngIf="!reward">
+    <div *ngFor="let reward of rewards" class="col-3 col-md-2 col-lg-1 align-self-center">
+      <img [src]="reward.thumbnail" [alt]="reward.name" [title]="reward.name">
+    </div>
+  </div>
+
+  <div class="row justify-content-center" *ngIf="reward">
+    <div class="card col-8 col-md-6 col-lg-4">
+      <img class="card-img-top" [src]="reward.thumbnail" [alt]="reward.name" [title]="reward.name">
+      <div class="card-body">
+        <h5 class="card-title">{{reward.name}}</h5>
+        <p class="card-text">{{reward.count}} / {{reward.stock}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <button class="btn btn-danger btn-lg" (click)="getReward()" [disabled]="reward">Взять награду !</button>
+  </div>
+</div>
+
+<div class="row row-cols-2 reward-generator-todo">
+  <h3 class="col-12 text-center">Todo:</h3>
+
+  <ul class="col">
+    <li>добавить слайдер</li>
+    <li>добавить анимацию победы</li>
+    <li>показывать награду в попапе</li>
+    <li>возможно анимация в попапе</li>
+  </ul>
+
+  <ul class="col">
+    <li>все картинки дата атрибутом</li>
+    <li>добавить помидоры (25-50 минут) + 5-10 минут отдых</li>
+    <li>помидоры подавали звуковой сигнал, будучи открытой вкладкой в браузере</li>
+    <li>*2-16 помидоров = награда</li>
+  </ul>
+
+  <ul class="col">
+    <li>Поднять билд ang10, ns preview, ng serve как у Time burner</li>
+    <li>Добавить scss</li>
+  </ul>
+</div>

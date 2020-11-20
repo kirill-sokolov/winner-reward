@@ -1,0 +1,24 @@
+.reward-generator {
+
+}
+
+.reward-generator__preview {
+  min-height: 360px;
+}
+
+.reward-generator__preview div {
+
+}
+
+.reward-generator .row + .row {
+  margin-top: 1rem;
+}
+
+.reward-generator__preview img {
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.reward-generator-todo {
+  margin-top: 20px;
+}
