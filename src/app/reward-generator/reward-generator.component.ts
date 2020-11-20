@@ -33,8 +33,7 @@ export class RewardGeneratorComponent implements OnInit {
 
   getReward(): void {
     const randomIndex = Math.floor(Math.random() * this.rewardStack.length) | 0
-    const reward = this.rewardStack[randomIndex]
-    this.reward = reward
+    this.reward = this.rewardStack[randomIndex]
   }
 
   loadRewards(): Promise<Array<IReward>> {
