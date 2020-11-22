@@ -16,3 +16,14 @@
 - Run `ng serve` for a dev server
 - Run `ng build + node server.js` to start on node
 - Navigate to `http://localhost:4080/`. The app will automatically reload if you change any of the source files.
+
+## To open from mobile
+    ng serve --host 0.0.0.0
+
+    from your machine: localhost:4200
+    from your phone: 192.168.1.199:4200
+
+##used libs:
+https://www.npmjs.com/package/canvas-confetti
+
+alternatively can use http://www.schillmania.com/projects/fireworks/
