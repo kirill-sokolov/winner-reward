@@ -6,7 +6,10 @@ interface IReward {
   name: string,
   count: number,
   stock: number,
-  thumbnail: string
+  thumbnail: string,
+  endDate?: string | boolean,
+  price?: number,
+  location?: string,
 }
 
 @Component({
@@ -25,7 +28,7 @@ export class RewardGeneratorComponent implements OnInit {
   ngOnInit(): void {
     this.loadRewards()
       .then((rewards) => {
-        this.rewards = rewards.filter((reward) => reward.count > 0)
+        this.rewards = rewards.filter((reward) => reward.count > 0 && reward.stock > 0)
         this.rewardStack = this.getRewardStack(rewards);
         this.isLoading = false
       })

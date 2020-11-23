@@ -27,3 +27,10 @@
 https://www.npmjs.com/package/canvas-confetti
 
 alternatively can use http://www.schillmania.com/projects/fireworks/
+
+
+##варианты рулетки
+https://codepen.io/ciricc/pen/ZxQEzP
+https://codepen.io/disus/pen/RwaejZe
+
+http://demo.st-marron.info/roulette/sample/demo.html
