@@ -34,3 +34,19 @@ https://codepen.io/ciricc/pen/ZxQEzP
 https://codepen.io/disus/pen/RwaejZe
 
 http://demo.st-marron.info/roulette/sample/demo.html
+
+## ViewChild
+    @Component({
+        selector: 'my-component',
+        template: '<div #element></div>',
+    })
+    export class MyComponent {
+        @ViewChild('element', {read: ViewContainerRef}) private anchor: ViewContainerRef;
+    
+        constructor(private resolver: ComponentFactoryResolver) { }
+    
+        whatever() {
+            let factory = this.resolver.resolveComponentFactory(ChildComponent);
+            this.anchor.createComponent(factory);
+        }
+    }

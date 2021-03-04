@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { rewardsJson } from './rewards';
+import {Component, OnInit} from '@angular/core';
+import {rewardsJson} from './rewards';
 import confetti from 'canvas-confetti';
+import {RewardDialogService} from '../reward-dialog.service';
 
 interface IReward {
-  name: string,
-  count: number,
-  stock: number,
-  thumbnail: string,
-  endDate?: string | boolean,
-  price?: number,
-  location?: string,
+  name: string;
+  count: number;
+  stock: number;
+  thumbnail: string;
+  endDate?: string | boolean;
+  price?: number;
+  location?: string;
 }
 
 @Component({
@@ -18,24 +19,39 @@ interface IReward {
   styleUrls: ['./reward-generator.component.css']
 })
 export class RewardGeneratorComponent implements OnInit {
-  isLoading: boolean = true
-  reward: IReward
-  rewards: IReward[]
-  rewardStack: IReward[]
+  constructor(private rewardDialogService: RewardDialogService) {
+  }
 
-  constructor() { }
+  isLoading = true;
+  reward: IReward;
+  rewards: IReward[];
+  rewardStack: IReward[];
+
+  private static generateFakeRewards(rewards: Array<IReward>): IReward[] {
+    const thumbnail = 'https://w7.pngwing.com/pngs/400/918/png-transparent-flat-design-user-interface-design-medal-award-reward-orange-logo-symbol-thumbnail.png';
+    const fakeReward: IReward = {
+      name: 'Попробуй в следующий раз',
+      count: rewards.length,
+      stock: rewards.length,
+      thumbnail
+    };
+    return new Array(rewards.length).fill(fakeReward, 0, rewards.length);
+  }
 
   ngOnInit(): void {
     this.loadRewards()
       .then((rewards) => {
-        this.rewards = rewards.filter((reward) => reward.count > 0 && reward.stock > 0)
+        this.rewards = rewards.filter((reward) => reward.count > 0 && reward.stock > 0);
         this.rewardStack = this.getRewardStack(rewards);
-        this.isLoading = false
+        this.isLoading = false;
       })
       .catch(() => console.log('loadReward Error'));
   }
 
   getReward(): void {
+    // const data = {rewardStack: this.rewardStack, reward: this.reward};
+    // this.rewardDialogService.openDialog(data);
+
     const randomIndex = Math.floor(Math.random() * this.rewardStack.length) | 0
     this.reward = this.rewardStack[randomIndex]
     this.runFireworkAnimation();
@@ -45,11 +61,11 @@ export class RewardGeneratorComponent implements OnInit {
 
   loadRewards(): Promise<Array<IReward>> {
     return new Promise<Array<IReward>>((resolve, reject) => {
-      setTimeout(() => resolve(rewardsJson), 300) // server response simulation
+      setTimeout(() => resolve(rewardsJson), 300); // server response simulation
     });
   }
 
-  private runConfettiAnimationOnSides(count = 2) {
+  private runConfettiAnimationOnSides(count = 2): void {
     const end = Date.now() + (1 * 1000);
     const colors = [
       ['#FFFF00', '#FFFFE0'],
@@ -61,21 +77,21 @@ export class RewardGeneratorComponent implements OnInit {
     ];
     const randomInRange = (min = 0, max = colors.length - 1) => {
       return Math.floor(Math.random() * (max - min) + min);
-    }
+    };
 
-    (function frame() {
+    (function frame(): void {
       confetti({
         particleCount: count,
         angle: 60,
         spread: 55,
-        origin: { x: 0, y: 1 },
+        origin: {x: 0, y: 1},
         colors: colors[randomInRange()]
       });
       confetti({
         particleCount: count,
         angle: 120,
         spread: 55,
-        origin: { x: 1, y: 1 },
+        origin: {x: 1, y: 1},
         colors: colors[randomInRange()]
       });
 
@@ -85,29 +101,29 @@ export class RewardGeneratorComponent implements OnInit {
     }());
   }
 
-  private runConfettiAnimationInMiddle(count = 200) {
-    const defaults = { origin: { y: 0.7 } };
+  private runConfettiAnimationInMiddle(count = 200): void {
+    const defaults = {origin: {y: 0.7}};
 
     const fire = (particleRatio, opts) => {
       confetti(Object.assign({}, defaults, opts, {
         particleCount: Math.floor(count * particleRatio)
       }));
-    }
+    };
 
-    fire(0.25, { spread: 26, startVelocity: 55, });
-    fire(0.2, { spread: 60, });
-    fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
-    fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
-    fire(0.1, { spread: 120, startVelocity: 45, });
+    fire(0.25, {spread: 26, startVelocity: 55});
+    fire(0.2, {spread: 60});
+    fire(0.35, {spread: 100, decay: 0.91, scalar: 0.8});
+    fire(0.1, {spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2});
+    fire(0.1, {spread: 120, startVelocity: 45});
   }
 
-  private runFireworkAnimation() {
+  private runFireworkAnimation(): void {
     const duration = 2 * 1000;
     const animationEnd = Date.now() + duration;
-    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+    const defaults = {startVelocity: 30, spread: 360, ticks: 60, zIndex: 0};
     const randomInRange = (min, max) => Math.random() * (max - min) + min;
 
-    const interval = setInterval(function () {
+    const interval = setInterval(() => {
       const timeLeft = animationEnd - Date.now();
 
       if (timeLeft <= 0) {
@@ -118,37 +134,26 @@ export class RewardGeneratorComponent implements OnInit {
       // since particles fall down, start a bit higher than random
       confetti(Object.assign({}, defaults, {
         particleCount,
-        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        origin: {x: randomInRange(0.1, 0.3), y: Math.random() - 0.2}
       }));
       confetti(Object.assign({}, defaults, {
         particleCount,
-        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        origin: {x: randomInRange(0.7, 0.9), y: Math.random() - 0.2}
       }));
     }, 100);
   }
 
-  private getRewardStack(rewards: Array<IReward>) {
-    let rewardStack = []
+  private getRewardStack(rewards: Array<IReward>): IReward[] {
+    let rewardStack = [];
     rewards.forEach((reward) => {
-      const multipleRewards = new Array(reward.count).fill(reward, 0, reward.count)
-      rewardStack = rewardStack.concat(multipleRewards)
-    })
+      const multipleRewards = new Array(reward.count).fill(reward, 0, reward.count);
+      rewardStack = rewardStack.concat(multipleRewards);
+    });
 
     const fakeRewards = RewardGeneratorComponent.generateFakeRewards(rewardStack);
     return rewardStack
       .concat(fakeRewards)
-      .sort(() => Math.random() - 0.5)
-  }
-
-  private static generateFakeRewards(rewards: Array<IReward>) {
-    const thumbnail: string = 'https://w7.pngwing.com/pngs/400/918/png-transparent-flat-design-user-interface-design-medal-award-reward-orange-logo-symbol-thumbnail.png'
-    const fakeReward: IReward = {
-      name: 'Попробуй в следующий раз',
-      count: rewards.length,
-      stock: rewards.length,
-      thumbnail: thumbnail
-    }
-    return new Array(rewards.length).fill(fakeReward, 0, rewards.length)
+      .sort(() => Math.random() - 0.5);
   }
 
 }

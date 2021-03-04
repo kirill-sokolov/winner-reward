@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" style="display: block">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <ng-content select=".app-popup-header"></ng-content>
+        <button type="button" class="close" (click)="close()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <ng-content select=".app-popup-body"></ng-content>
+      </div>
+      <div class="modal-footer">
+        <ng-content select=".app-popup-footer"></ng-content>
+        <button type="button" class="btn btn-secondary" (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade show"></div>
