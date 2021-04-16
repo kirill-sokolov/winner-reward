@@ -42,7 +42,7 @@ export class RewardGeneratorComponent implements OnInit {
     this.loadRewards()
       .then((rewards) => {
         this.rewards = rewards.filter((reward) => reward.count > 0 && reward.stock > 0);
-        this.rewardStack = this.getRewardStack(rewards);
+        this.rewardStack = this.getRewardStack(this.rewards);
         this.isLoading = false;
       })
       .catch(() => console.log('loadReward Error'));
@@ -52,8 +52,8 @@ export class RewardGeneratorComponent implements OnInit {
     // const data = {rewardStack: this.rewardStack, reward: this.reward};
     // this.rewardDialogService.openDialog(data);
 
-    const randomIndex = Math.floor(Math.random() * this.rewardStack.length) | 0
-    this.reward = this.rewardStack[randomIndex]
+    const randomIndex = Math.floor(Math.random() * this.rewardStack.length) | 0;
+    this.reward = this.rewardStack[randomIndex];
     this.runFireworkAnimation();
     this.runConfettiAnimationInMiddle(500);
     this.runConfettiAnimationOnSides();
