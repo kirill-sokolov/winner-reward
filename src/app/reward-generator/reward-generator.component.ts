@@ -146,7 +146,7 @@ export class RewardGeneratorComponent implements OnInit {
   private getRewardStack(rewards: Array<IReward>): IReward[] {
     let rewardStack = [];
     rewards.forEach((reward) => {
-      const multipleRewards = new Array(reward.count).fill(reward, 0, reward.count);
+      const multipleRewards = new Array(reward.stock).fill(reward, 0, reward.stock);
       rewardStack = rewardStack.concat(multipleRewards);
     });
 
